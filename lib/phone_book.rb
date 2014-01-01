@@ -14,7 +14,7 @@ class PhoneBook
   end
 
   def lookup(name)
-    last_name, first_name = terms(name)
+    last_name, first_name = name.split(', ')
 
     results = people.find_by_last_name(last_name)
     if first_name
@@ -23,10 +23,6 @@ class PhoneBook
     results.map do |person|
       Entry.new(person, numbers.find_by_person_id(person.id))
     end
-  end
-
-  def terms(name)
-    name.match(/([^,]*),?\ ?(.+)?/).to_a[1..-1]
   end
 
   def reverse_lookup(number)
