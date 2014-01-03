@@ -1,17 +1,5 @@
-class Entry
-  attr_reader :person, :numbers
-
-  def initialize(person, numbers)
-    @person = person
-    @numbers = Array(numbers)
-  end
-
+Entry = Struct.new(:first_name, :last_name, :numbers) do
   def name
-    person.name
-  end
-
-  def phone_numbers
-    numbers.map(&:to_s)
+    [first_name, last_name].join ' '
   end
 end
-

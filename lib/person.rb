@@ -5,8 +5,4 @@ class Person
     @last_name = data[:last_name]
     @first_name = data[:first_name]
   end
-
-  def name
-    [first_name, last_name].join(' ')
-  end
 end

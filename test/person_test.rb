@@ -18,10 +18,5 @@ class PersonTest < Minitest::Test
     person = Person.new(first_name: 'Alice')
     assert_equal 'Alice', person.first_name
   end
-
-  def test_full_name
-    person = Person.new(first_name: 'Bob', last_name: 'Jones')
-    assert_equal 'Bob Jones', person.name
-  end
 end
 

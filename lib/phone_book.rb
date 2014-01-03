@@ -1,32 +1,28 @@
 require 'csv'
-require_relative 'entry'
-require_relative 'people'
+require_relative 'db'
 require_relative 'person'
 require_relative 'phone_number'
-require_relative 'phone_numbers'
+require_relative 'entry'
+require_relative 'entry_repository'
 
 class PhoneBook
-  attr_reader :people, :numbers
+  attr_reader :repository
 
-  def initialize(people, numbers)
-    @people = people
-    @numbers = numbers
+  def initialize(repository)
+    @repository = repository
   end
 
   def lookup(name)
     last_name, first_name = name.split(', ')
 
-    results = people.find_by_last_name(last_name)
     if first_name
-      results = results.select { |person| person.first_name == first_name }
-    end
-    results.map do |person|
-      Entry.new(person, numbers.find_by_person_id(person.id))
+      repository.find_by_first_and_last_name(first_name, last_name)
+    else
+      repository.find_by_last_name(last_name)
     end
   end
 
   def reverse_lookup(number)
-    id = numbers.find_by_number(number).person_id
-    Entry.new(people.find_by_id(id), numbers.find_by_person_id(id))
+    repository.find_by_number(number)
   end
 end
